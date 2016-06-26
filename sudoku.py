@@ -103,17 +103,17 @@ def decide_num_by_candidates(sudoku_row, j, candidates):
     return list(target_cand)
 
 
-def print_sudoku(sudoku):
-    for row in sudoku:
-        sys.stdout.write('|')
-        for num in row:
-            if num == 0:
-                print ' ',
-            else:
-                print num,
-            sys.stdout.write('|')
-        print ''
-    return
+# def print_sudoku(sudoku):
+#     for row in sudoku:
+#         sys.stdout.write('|')
+#         for num in row:
+#             if num == 0:
+#                 print ' ',
+#             else:
+#                 print num,
+#             sys.stdout.write('|')
+#         print ''
+#     return
 
 
 if __name__ == '__main__':
@@ -140,4 +140,4 @@ if __name__ == '__main__':
     # print(square(sudoku1))
     # print(calc_candidate(sudoku1, square(sudoku1), 0, 0))
     # print_sudoku(solve(sudoku1))
-    print_sudoku(solve(sudoku3))
+    #print_sudoku(solve(sudoku3))
