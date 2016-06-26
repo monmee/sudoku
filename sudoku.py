@@ -46,6 +46,9 @@ def transpose(sudoku):
 
 
 def square(sudoku):
+    '''
+    数独の3x3(box)バージョンを返す
+    '''
     boxes = []
     for i in range(3):
         rows = sudoku[i*3:(i+1)*3]
@@ -58,12 +61,18 @@ def square(sudoku):
 
 
 def is_complete(sudoku):
+    '''
+    数独が完成していればTrue
+    '''
     for sudoku_row in sudoku:
         if 0 in sudoku_row: return False
     return True
 
 
 def get_box(boxes, i, j):
+    '''
+    i行j列目のマスが含まれるboxを返す
+    '''
     x = int(i / 3)
     y = int(j / 3)
     return boxes[x*3 + y]
@@ -77,6 +86,9 @@ def flatten(lst):
 
 
 def calc_candidate(sudoku, boxes, i, j):
+    '''
+    i行j列目のマスに入りうる数字のリストを返す
+    '''
     candidate = set([x+1 for x in range(9)])
     row = set(list(filter(lambda num: num != 0, sudoku[i])))
     col = set(list(filter(lambda num: num != 0, transpose(sudoku)[j])))
@@ -85,6 +97,9 @@ def calc_candidate(sudoku, boxes, i, j):
 
 
 def decide_num_row(sudoku, candidates):
+    '''
+    候補から数字を決める
+    '''
     for x in range(9):
         sudoku_row = list(filter(lambda num: num != 0, sudoku[x]))
         candidates_row = candidates[x]
@@ -93,9 +108,13 @@ def decide_num_row(sudoku, candidates):
             if len(cand) == 1:
                 sudoku[x][y] = cand[0]
                 candidates[x][y] = []
+    return
 
 
 def decide_num_by_candidates(sudoku_row, j, candidates):
+    '''
+    ある行に対して候補から数字を決める
+    '''
     target_cand = set(candidates[j]) - set(sudoku_row)
     del candidates[j]
     for candidate in candidates:
@@ -104,6 +123,9 @@ def decide_num_by_candidates(sudoku_row, j, candidates):
 
 
 def print_sudoku(sudoku):
+    '''
+    数独をいい感じに出力
+    '''
     for row in sudoku:
         sys.stdout.write('|')
         for num in row:
@@ -136,8 +158,5 @@ if __name__ == '__main__':
                          [0, 0, 5, 0, 0, 0, 0, 0, 7],
                          [0, 0, 0, 9, 6, 0, 0, 3, 0],
                          [7, 0, 0, 0, 0, 0, 0, 0, 2]])
-    # print_sudoku(sudoku1)
-    # print(square(sudoku1))
-    # print(calc_candidate(sudoku1, square(sudoku1), 0, 0))
-    # print_sudoku(solve(sudoku1))
+
     print_sudoku(solve(sudoku3))
