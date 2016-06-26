@@ -42,7 +42,7 @@ def solve(sudoku):
 
 
 def transpose(sudoku):
-    return map(list, zip(*sudoku))
+    return list(map(list, zip(*sudoku)))
 
 
 def square(sudoku):
@@ -64,8 +64,8 @@ def is_complete(sudoku):
 
 
 def get_box(boxes, i, j):
-    x = i / 3
-    y = j / 3
+    x = int(i / 3)
+    y = int(j / 3)
     return boxes[x*3 + y]
 
 
@@ -78,15 +78,15 @@ def flatten(lst):
 
 def calc_candidate(sudoku, boxes, i, j):
     candidate = set([x+1 for x in range(9)])
-    row = set(filter(lambda num: num != 0, sudoku[i]))
-    col = set(filter(lambda num: num != 0, transpose(sudoku)[j]))
-    box = set(filter(lambda num: num != 0, flatten(get_box(boxes, i, j))))
+    row = set(list(filter(lambda num: num != 0, sudoku[i])))
+    col = set(list(filter(lambda num: num != 0, transpose(sudoku)[j])))
+    box = set(list(filter(lambda num: num != 0, flatten(get_box(boxes, i, j)))))
     return list(candidate - row - col - box)
 
 
 def decide_num_row(sudoku, candidates):
     for x in range(9):
-        sudoku_row = filter(lambda num: num != 0, sudoku[x])
+        sudoku_row = list(filter(lambda num: num != 0, sudoku[x]))
         candidates_row = candidates[x]
         for y in range(9):
             cand = decide_num_by_candidates(sudoku_row, y, candidates_row[:])
@@ -103,17 +103,17 @@ def decide_num_by_candidates(sudoku_row, j, candidates):
     return list(target_cand)
 
 
-# def print_sudoku(sudoku):
-#     for row in sudoku:
-#         sys.stdout.write('|')
-#         for num in row:
-#             if num == 0:
-#                 print ' ',
-#             else:
-#                 print num,
-#             sys.stdout.write('|')
-#         print ''
-#     return
+def print_sudoku(sudoku):
+    for row in sudoku:
+        sys.stdout.write('|')
+        for num in row:
+            if num == 0:
+                print(' ', end = '')
+            else:
+                print(num, end = '')
+            sys.stdout.write('|')
+        print('')
+    return
 
 
 if __name__ == '__main__':
@@ -140,4 +140,4 @@ if __name__ == '__main__':
     # print(square(sudoku1))
     # print(calc_candidate(sudoku1, square(sudoku1), 0, 0))
     # print_sudoku(solve(sudoku1))
-    #print_sudoku(solve(sudoku3))
+    print_sudoku(solve(sudoku3))
